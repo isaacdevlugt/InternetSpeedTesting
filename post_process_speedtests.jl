@@ -33,11 +33,16 @@ end
 
 down, up, ping = get_download("speedtests")
 
+deleteat!(up, length(up))
+deleteat!(ping, length(ping))
+
 time = range(1, stop=length(down))
 ioff()
-fig = figure()
-plot(time, down, label="download speed")
-plot(time, up, label="upload speed")
-plot(time, ping, label="ping")
-
+fig, ax = subplots(3,1, sharex = true)
+ax[1,1].plot(time, down, color="blue")
+ax[1,1].set_ylabel("Down (Mbit/s)")
+ax[2,1].plot(time, up, color="red")
+ax[2,1].set_ylabel("Up (Mbit/s)")
+ax[3,1].plot(time, ping, color="green")
+ax[3,1].set_ylabel("Ping (ms)")
 savefig("speedtest.png")
